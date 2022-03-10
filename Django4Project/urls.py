@@ -20,7 +20,7 @@ from django.contrib import admin
 from django.urls import path
 
 urlpatterns = [
-    path('', lambda  req: http.HttpResponse(200)),
+    path('', lambda req: http.HttpResponse(200)),
     path('health', lambda req: http.HttpResponse(200)),
     path('admin/', admin.site.urls),
 ]
