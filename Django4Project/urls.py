@@ -18,9 +18,10 @@ from importlib.resources import path
 from django import http
 from django.contrib import admin
 from django.urls import path
+from .views import sideline
 
 urlpatterns = [
-    path('', lambda req: http.HttpResponse(200)),
+    path('', sideline),
     path('health', lambda req: http.HttpResponse(200)),
     path('admin/', admin.site.urls),
 ]
