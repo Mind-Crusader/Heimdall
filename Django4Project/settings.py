@@ -108,7 +108,7 @@ WSGI_APPLICATION = 'Django4Project.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -118,6 +118,12 @@ DATABASES = {
         'HOST': os.getenv('POSTGRESQL_SERVICE_HOST', 'localhost'),
         'PORT': os.getenv('POSTGRESQL_SERVICE_PORT', '5432'),
     }
+}
+"""
+from . import database
+
+DATABASES = {
+    'default': database.config()
 }
 
 # Password validation
