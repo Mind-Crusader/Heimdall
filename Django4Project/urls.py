@@ -54,6 +54,6 @@ if settings.FORCE_STATIC_FILE_SERVING and not settings.DEBUG:
     settings.DEBUG = False
 
 
-admin.site.site_header = "VortiBD Admin"
-admin.site.site_title = "VortiBD Admin Portal"
-admin.site.index_title = "VortiBD to Finder Researcher Portal"
+admin.site.site_header = "Heimdall Admin"
+admin.site.site_title = "Heimdall Admin Portal"
+admin.site.index_title = "Heimdall to Finder Researcher Portal"

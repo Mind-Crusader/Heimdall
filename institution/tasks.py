@@ -15,6 +15,6 @@ def set_admission_as_inactive(session_id):
 def send_email_to_subscriber(institute_subscribers, institute_name):
     subject = 'Admission Session Is Now Active'
     message = f'Message From {institute_name}.Our Admission is Open Now.Please Get Form If You Are Interested'
-    mail_tuple = (subject, message, 'no_responder@vortibd.com',
+    mail_tuple = (subject, message, 'admin@mind-crusader.online',
                   institute_subscribers)
     send_mass_mail((mail_tuple,))

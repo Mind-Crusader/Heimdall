@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth import get_user_model
 from settings.models import ApplicationInstruction
-from .mixins import AictiveUserRequiredMixin, AictiveApplicantRequiredMixin, AictiveInstitutionRequiredMixin
+from .mixins import ActiveUserRequiredMixin, ActiveApplicantRequiredMixin, ActiveInstitutionRequiredMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import SignUpForm, UserForm, ProfileForm
 from django.contrib.auth.views import LoginView
@@ -26,7 +26,7 @@ class HomeLoginView(LoginView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'VortiBd.com'
+        context['title'] = 'Heimdall'
         context['subscription_form'] = SubscriptionForm()
         context['institute_search_form'] = InstituteSearchForm()
         return context
@@ -95,7 +95,7 @@ def activate(request, uidb64, token):
         return redirect('home_login')
 
 
-class MyProfileView(AictiveUserRequiredMixin, View):
+class MyProfileView(ActiveUserRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         user_form = UserForm(instance=request.user)
         profile_form = ProfileForm(instance=request.user.user_profile)
@@ -135,7 +135,7 @@ class MyProfileView(AictiveUserRequiredMixin, View):
                 return render(request, 'institution/accounts/my_profile.html', context)
 
 
-class ChangePasswordView(AictiveUserRequiredMixin, View):
+class ChangePasswordView(ActiveUserRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         password_changeform = PasswordChangeForm(request.user)
         context = {
@@ -186,7 +186,7 @@ class LoginSuccess(View):
 
 
 # Institution Holder Views Start
-class InstitutionDashboardView(AictiveInstitutionRequiredMixin, View):
+class InstitutionDashboardView(ActiveInstitutionRequiredMixin, View):
     def get(self, request, *args, **kwrags):
         user_obj = request.user
         user_profile = user_obj.user_profile
@@ -215,7 +215,7 @@ class InstitutionDashboardView(AictiveInstitutionRequiredMixin, View):
 
 
 # Applicant Holder Views Start
-class ApplicantDashboardView(AictiveApplicantRequiredMixin, View):
+class ApplicantDashboardView(ActiveApplicantRequiredMixin, View):
     def get(self, request, *args, **kwrags):
         user_obj = request.user
         user_profile = user_obj.user_profile

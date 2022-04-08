@@ -11,8 +11,8 @@ class ApplicantProfile(models.Model):
         ('2', 'Female'),
     )
     RELIGION_CHOICES = (
-        ('Islam', 'Islam'),
         ('Hinduism', 'Hinduism'),
+        ('Islam', 'Islam'),
         ('Cristian', 'Cristian'),
         ('Buddhist', 'Buddhist'),
     )
