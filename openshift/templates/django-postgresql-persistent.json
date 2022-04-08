@@ -136,7 +136,7 @@
           }
         ],
         "postCommit": {
-           "script": "./manage.py makemigrations"
+           "script": "./manage.py test"
         }
       }
     },
