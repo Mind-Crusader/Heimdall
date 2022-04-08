@@ -38,9 +38,9 @@
                                     <img src="{{profile.student_pic.url}}" width="120px">
                                 </td>
                                 <td>
-                                    {{profile.student_name}}<br>
-                                    {{profile.father_name}}<br>
-                                    {{profile.mother_name}}<br>
+                                    Name:{{profile.student_name}}<br>
+                                    Father Name:{{profile.father_name}}<br>
+                                    Mother Name:{{profile.mother_name}}<br>
                                 </td>
                                 <td>
                                     <a type="button" data-toggle="modal" data-target="#applicationStatusModel" class="btn-block btn btn-info btn-sm text-white status" data-status-url="{% url 'applicant:application_status' profile.id %}">
