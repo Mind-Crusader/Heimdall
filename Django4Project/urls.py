@@ -24,6 +24,7 @@ from accounts.views import HomeLoginView
 from .views import sideline
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path('health', lambda req: http.HttpResponse(200)),
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('applicant/', include('applicant.urls', namespace='applicant')),
@@ -37,10 +38,10 @@ urlpatterns = [
 
 if settings.DEBUG:
     import debug_toolbar
-    urlpatterns = [
-        path('__debug__/', include(debug_toolbar.urls)),
-    ] + urlpatterns
 
+    urlpatterns = [
+                      path('__debug__/', include(debug_toolbar.urls)),
+                  ] + urlpatterns
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
@@ -52,7 +53,6 @@ if settings.FORCE_STATIC_FILE_SERVING and not settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
     settings.DEBUG = False
-
 
 admin.site.site_header = "Heimdall Admin"
 admin.site.site_title = "Heimdall Admin Portal"
