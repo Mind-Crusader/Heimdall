@@ -14,6 +14,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from django.contrib import messages
+from . import database
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -108,7 +109,7 @@ WSGI_APPLICATION = 'Django4Project.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -118,6 +119,11 @@ DATABASES = {
         'HOST': os.getenv('POSTGRESQL_SERVICE_HOST', 'localhost'),
         'PORT': os.getenv('POSTGRESQL_SERVICE_PORT', '5432'),
     }
+}
+"""
+
+DATABASES = {
+    'default': database.config()
 }
 
 # Password validation
@@ -176,4 +182,18 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
 
-# TODO EMAIL CREDENTIALS
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+DEFAULT_FROM_EMAIL = 'admin@mind-crusader.online'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.zoho.in'
+EMAIL_HOST_USER = 'admin@mind-crusader.online'
+EMAIL_HOST_PASSWORD = os.getenv(
+    'EMAIL_PASSWORD',
+)
+
+EMAIL_PORT = 587
+
+GRAPH_MODELS = {
+    "all_applications": True,
+    "group_models": True,
+}
