@@ -197,3 +197,7 @@ GRAPH_MODELS = {
     "all_applications": True,
     "group_models": True,
 }
+
+USE_X_FORWARDED_HOST = True
+USE_X_FORWARDED_PORT = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
