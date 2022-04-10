@@ -198,6 +198,4 @@ GRAPH_MODELS = {
     "group_models": True,
 }
 
-USE_X_FORWARDED_HOST = True
-USE_X_FORWARDED_PORT = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+CSRF_TRUSTED_ORIGINS = ['heimdall.mind-crusader.online']
