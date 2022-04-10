@@ -198,4 +198,4 @@ GRAPH_MODELS = {
     "group_models": True,
 }
 
-CSRF_TRUSTED_ORIGINS = ['heimdall.mind-crusader.online']
+CSRF_TRUSTED_ORIGINS = ['https://heimdall.mind-crusader.online']
