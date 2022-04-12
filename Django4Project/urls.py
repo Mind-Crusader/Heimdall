@@ -33,6 +33,7 @@ urlpatterns = [
     path('transaction/', include('transaction.urls', namespace='transaction')),
     path('settings/', include('settings.urls', namespace='settings')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('/', HomeLoginView.as_view(), name="home_login"),
     path('', HomeLoginView.as_view(), name="home_login"),
 ]
 
