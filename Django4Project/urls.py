@@ -24,6 +24,8 @@ from accounts.views import HomeLoginView
 from .views import sideline
 
 urlpatterns = [
+    path('/', HomeLoginView.as_view(), name="home_login"),
+    path('', HomeLoginView.as_view(), name="home_login"),
     path('admin/', admin.site.urls),
     path('health', lambda req: http.HttpResponse(200)),
     path('accounts/', include('accounts.urls', namespace='accounts')),
@@ -33,8 +35,7 @@ urlpatterns = [
     path('transaction/', include('transaction.urls', namespace='transaction')),
     path('settings/', include('settings.urls', namespace='settings')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
-    path('/', HomeLoginView.as_view(), name="home_login"),
-    path('', HomeLoginView.as_view(), name="home_login"),
+
 ]
 
 if settings.DEBUG:
