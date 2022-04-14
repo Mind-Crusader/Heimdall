@@ -7,21 +7,16 @@ from django import http
 from accounts.views import HomeLoginView
 
 urlpatterns = [
-              << << << < HEAD
-path('/', HomeLoginView.as_view(), name="home_login"),
-path('', HomeLoginView.as_view(), name="home_login"),
-path('admin/', admin.site.urls),
-== == == =
->> >> >> > testing
-path('health', lambda req: http.HttpResponse(200)),
-path('admin/', admin.site.urls),
-path('accounts/', include('accounts.urls', namespace='accounts')),
-path('applicant/', include('applicant.urls', namespace='applicant')),
-path('institution/', include('institution.urls', namespace='institution')),
-path('applications/', include('applications.urls', namespace='applications')),
-path('transaction/', include('transaction.urls', namespace='transaction')),
-path('settings/', include('settings.urls', namespace='settings')),
-path('ckeditor/', include('ckeditor_uploader.urls')),
+
+    path('health', lambda req: http.HttpResponse(200)),
+    path('admin/', admin.site.urls),
+    path('accounts/', include('accounts.urls', namespace='accounts')),
+    path('applicant/', include('applicant.urls', namespace='applicant')),
+    path('institution/', include('institution.urls', namespace='institution')),
+    path('applications/', include('applications.urls', namespace='applications')),
+    path('transaction/', include('transaction.urls', namespace='transaction')),
+    path('settings/', include('settings.urls', namespace='settings')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 
 ]
 
