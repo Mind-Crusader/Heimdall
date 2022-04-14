@@ -31,4 +31,5 @@ whitenoise==5.1.0
 xhtml2pdf
 zipp==3.1.0
 psycopg2
+gunicorn
 
