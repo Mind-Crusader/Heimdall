@@ -1,9 +1,4 @@
 {% autoescape off %}
 Hi {{ user.username }},
-Please click on the link to confirm your registration.
-
-    https://{{ domain }}{% url 'accounts:activate' uidb64=uid token=token %}
-
-Thank You.
-   - Mind-Crusader Team
+Please click on the link to confirm your registration,https://{{ domain }}{% url 'accounts:activate' uidb64=uid token=token %}
 {% endautoescape %}

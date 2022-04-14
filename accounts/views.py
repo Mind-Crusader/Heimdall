@@ -3,13 +3,13 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from accounts.tokens import account_activation_token
-from django.utils.encoding import force_bytes, force_str
+from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth import get_user_model
 from settings.models import ApplicationInstruction
-from .mixins import ActiveUserRequiredMixin, ActiveApplicantRequiredMixin, ActiveInstitutionRequiredMixin
+from .mixins import AictiveUserRequiredMixin, AictiveApplicantRequiredMixin, AictiveInstitutionRequiredMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import SignUpForm, UserForm, ProfileForm
 from django.contrib.auth.views import LoginView
@@ -31,7 +31,7 @@ class HomeLoginView(LoginView):
         context['institute_search_form'] = InstituteSearchForm()
         return context
 
-    def render_to_response(self, context):
+    def render_to_response(self, context, **kwargs):
         if self.request.user.is_authenticated and self.request.user.user_profile.active and self.request.user.user_profile.email_confirmed:
             return redirect('accounts:login_success')
         return super().render_to_response(context)
@@ -68,7 +68,7 @@ class RegisterView(View):
             })
             user.email_user(subject, message)
             messages.success(
-                request, ('Registration Completed.Please Confirm Your Email Address'))
+                request, 'Registration Completed.Please Confirm Your Email Address')
             return redirect('home_login')
         else:
             context = {
@@ -88,14 +88,14 @@ def activate(request, uidb64, token):
         user.user_profile.email_confirmed = True
         user.user_profile.save()
         messages.success(
-            request, ('Thank You For Confirm The Email.Your Account Will Be Activated Soon'))
+            request, 'Thank You For Confirm The Email.Your Account Will Be Activated Soon')
         return redirect('home_login')
     else:
-        messages.success(request, ('Activation link is invalid!'))
+        messages.success(request, 'Activation link is invalid!')
         return redirect('home_login')
 
 
-class MyProfileView(ActiveUserRequiredMixin, View):
+class MyProfileView(AictiveUserRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         user_form = UserForm(instance=request.user)
         profile_form = ProfileForm(instance=request.user.user_profile)
@@ -135,7 +135,7 @@ class MyProfileView(ActiveUserRequiredMixin, View):
                 return render(request, 'institution/accounts/my_profile.html', context)
 
 
-class ChangePasswordView(ActiveUserRequiredMixin, View):
+class ChangePasswordView(AictiveUserRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         password_changeform = PasswordChangeForm(request.user)
         context = {
@@ -186,7 +186,7 @@ class LoginSuccess(View):
 
 
 # Institution Holder Views Start
-class InstitutionDashboardView(ActiveInstitutionRequiredMixin, View):
+class InstitutionDashboardView(AictiveInstitutionRequiredMixin, View):
     def get(self, request, *args, **kwrags):
         user_obj = request.user
         user_profile = user_obj.user_profile
@@ -215,7 +215,7 @@ class InstitutionDashboardView(ActiveInstitutionRequiredMixin, View):
 
 
 # Applicant Holder Views Start
-class ApplicantDashboardView(ActiveApplicantRequiredMixin, View):
+class ApplicantDashboardView(AictiveApplicantRequiredMixin, View):
     def get(self, request, *args, **kwrags):
         user_obj = request.user
         user_profile = user_obj.user_profile

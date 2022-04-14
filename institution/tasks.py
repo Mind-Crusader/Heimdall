@@ -1,11 +1,13 @@
+from celery import task
 from django.shortcuts import get_object_or_404
 from celery import shared_task
 from django.core.mail import send_mass_mail
-from institution.models import *
 
 
-@shared_task()
+
+@task()
 def set_admission_as_inactive(session_id):
+    from institution.models import AdmissionSession
     session_object = get_object_or_404(AdmissionSession, id=session_id)
     session_object.status = False
     session_object.save()

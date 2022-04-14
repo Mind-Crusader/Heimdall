@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.urls import reverse_lazy
 from django.db import transaction
-from accounts.mixins import ActiveUserRequiredMixin, ActiveApplicantRequiredMixin
+from accounts.mixins import AictiveUserRequiredMixin, AictiveApplicantRequiredMixin
 from django.contrib import messages
 from django.core import serializers
 import json
@@ -12,6 +12,8 @@ from .forms import ApplicantPrevEducationFormSet, ApplicantProfileForm
 from django.contrib.auth import get_user_model
 from .models import ApplicantPrevEducation, ApplicantProfile
 from django.views import View, generic
+
+
 # Create your views here.
 
 
@@ -22,7 +24,8 @@ class ApplicantProfileView(generic.ListView):
 
     def get_queryset(self):
         qs = ApplicantProfile.objects.select_related(
-            'owner').filter(owner=self.request.user).only("owner__username", "father_name", "mother_name", "student_name", "student_pic")
+            'owner').filter(owner=self.request.user).only("owner__username", "father_name", "mother_name",
+                                                          "student_name", "student_pic")
         return qs
 
     def get_context_data(self, **kwargs):
@@ -31,7 +34,7 @@ class ApplicantProfileView(generic.ListView):
         return context
 
 
-class CreateApplicantProfileView(SuccessMessageMixin, ActiveApplicantRequiredMixin, generic.CreateView):
+class CreateApplicantProfileView(SuccessMessageMixin, AictiveApplicantRequiredMixin, generic.CreateView):
     model = ApplicantProfile
     form_class = ApplicantProfileForm
     template_name = 'applicant/applicant/create_applicant_profile.html'
@@ -63,7 +66,8 @@ class CreateApplicantProfileView(SuccessMessageMixin, ActiveApplicantRequiredMix
             else:
                 return self.render_to_response(self.get_context_data(form=form))
 
-class EditApplicantProfileView(SuccessMessageMixin, ActiveApplicantRequiredMixin, generic.UpdateView):
+
+class EditApplicantProfileView(SuccessMessageMixin, AictiveApplicantRequiredMixin, generic.UpdateView):
     model = ApplicantProfile
     context_object_name = 'applicant_profile'
     form_class = ApplicantProfileForm
@@ -100,7 +104,7 @@ class EditApplicantProfileView(SuccessMessageMixin, ActiveApplicantRequiredMixin
                 return self.render_to_response(self.get_context_data(form=form))
 
 
-class DeleteApplicantProfileView(SuccessMessageMixin, ActiveApplicantRequiredMixin, generic.edit.DeleteView):
+class DeleteApplicantProfileView(SuccessMessageMixin, AictiveApplicantRequiredMixin, generic.edit.DeleteView):
     model = ApplicantProfile
     template_name = 'applicant/applicant/delete_applicant_profile.html'
     success_message = "Applicant Profile was deleted successfully"
@@ -116,7 +120,7 @@ class DeleteApplicantProfileView(SuccessMessageMixin, ActiveApplicantRequiredMix
         return super(DeleteApplicantProfileView, self).delete(request, *args, **kwargs)
 
 
-class ApplicationStatusView(ActiveApplicantRequiredMixin, generic.edit.DeleteView):
+class ApplicationStatusView(AictiveApplicantRequiredMixin, generic.edit.DeleteView):
     def get(self, request, *args, **kwargs):
         applicant_id = kwargs.get('applicant_id')
         applicant_obj = get_object_or_404(ApplicantProfile, id=applicant_id)
@@ -127,7 +131,7 @@ class ApplicationStatusView(ActiveApplicantRequiredMixin, generic.edit.DeleteVie
         return HttpResponse(data, content_type='application/json')
 
 
-class ApplicantAdmitCardView(ActiveApplicantRequiredMixin, generic.ListView):
+class ApplicantAdmitCardView(AictiveApplicantRequiredMixin, generic.ListView):
     model = Application
     context_object_name = 'applicant_admit_card'
     template_name = 'applicant/admit_card/admit_card.html'
@@ -135,7 +139,9 @@ class ApplicantAdmitCardView(ActiveApplicantRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         qs = Application.objects.select_related('owner', 'applicant', 'institute', 'subject').filter(
-            owner=self.request.user, status='1', paid=True).only("applicant__student_name","institute__institute_name","subject__subject_name","level","admit_card","owner__username")
+            owner=self.request.user, status='1', paid=True).only("applicant__student_name", "institute__institute_name",
+                                                                 "subject__subject_name", "level", "admit_card",
+                                                                 "owner__username")
         return qs
 
     def get_context_data(self, **kwargs):

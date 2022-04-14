@@ -4,7 +4,7 @@ from django.http import HttpResponse
 import json
 
 
-class ActiveUserRequiredMixin:
+class AictiveUserRequiredMixin:
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated and request.user.user_profile.active and request.user.user_profile.email_confirmed:
             return super().dispatch(request, *args, **kwargs)
@@ -14,7 +14,7 @@ class ActiveUserRequiredMixin:
             return redirect('home_login')
 
 
-class ActiveApplicantRequiredMixin:
+class AictiveApplicantRequiredMixin:
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated and request.user.user_profile.active and request.user.user_profile.email_confirmed and request.user.user_profile.user_type == '0':
             return super().dispatch(request, *args, **kwargs)
@@ -24,7 +24,7 @@ class ActiveApplicantRequiredMixin:
             return redirect('home_login')
 
 
-class ActiveInstitutionRequiredMixin:
+class AictiveInstitutionRequiredMixin:
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated and request.user.user_profile.active and request.user.user_profile.email_confirmed and request.user.user_profile.user_type == '1':
             return super().dispatch(request, *args, **kwargs)
