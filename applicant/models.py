@@ -16,10 +16,6 @@ class ApplicantProfile(models.Model):
         ('Cristian', 'Cristian'),
         ('Buddhist', 'Buddhist'),
     )
-    FREEDOM_FIGHTER_CHOICES = (
-        ('No', 'No'),
-        ('Yes', 'Yes'),
-    )
     IS_AUTISM_CHOICES = (
         ('No', 'No'),
         ('Yes', 'Yes'),
@@ -40,8 +36,6 @@ class ApplicantProfile(models.Model):
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
     religion = models.CharField(max_length=10, choices=RELIGION_CHOICES)
     blood_group = models.CharField(max_length=20)
-    freedom_fighter_quota = models.CharField(
-        max_length=150, choices=FREEDOM_FIGHTER_CHOICES, default="0")
     is_autism = models.CharField(
         max_length=150, choices=IS_AUTISM_CHOICES, default="0")
     height = models.FloatField(null=True, blank=True)
@@ -62,21 +56,17 @@ class ApplicantProfile(models.Model):
 
 class ApplicantPrevEducation(models.Model):
     BOARD_CHOICES = (
-        ('Dhaka', 'Dhaka'),
-        ('Khulna', 'Khulna'),
-        ('Rajshahi', 'Rajshahi'),
-        ('Rajshahi', 'Rajshahi'),
-        ('Jessore', 'Jessore'),
-        ('Comilla', 'Comilla'),
+        ('WBBSE', 'WBBSE'),
+        ('WBCHSE', 'WBCHSE'),
     )
     EXAM_CHOICES = (
-        ('SSC', 'SSC'),
-        ('HSC', 'HSC')
+        ('Secondary', 'Secondary'),
+        ('Higher Secondary', 'Higher Secondary')
     )
     applicant = models.ForeignKey(
         ApplicantProfile, on_delete=models.CASCADE, related_name='applicant_pre_edu')
-    exam_name = models.CharField(max_length=10, choices=EXAM_CHOICES)
-    board_name = models.CharField(max_length=10, choices=BOARD_CHOICES)
+    exam_name = models.CharField(max_length=20, choices=EXAM_CHOICES)
+    board_name = models.CharField(max_length=20, choices=BOARD_CHOICES)
     institute_name = models.CharField(max_length=255)
     passing_year = models.IntegerField()
     result = models.FloatField()
